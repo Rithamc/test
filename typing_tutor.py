@@ -1,92 +1,48 @@
 """
-4.1PP Selection and Repetition
+3.3PP Functions: Calculation of Stopping distance for a car
 """
 
 __author__ = "Ritham Chhetri"
 
-import timeit
-
-def show_heading(heading: str):
+def distance(initial_velocity: float, reaction_time: float) -> float:
     """
-    Displays the given heading in ALL CAPS, underlined by asterisks,
-    followed by a blank line.
+    Calculate the stopping distance based on initial velocity and reaction time.
     """
+    FRICTION = 0.7  # Coefficient of friction for the road surface
+    GRAVITY = 9.81  # Acceleration due to gravity in m/s^2
     
-    # Display heading in upper case
-    formatted_heading = heading.upper()
-    print(formatted_heading)
-    
-    # Display len(heading) tildes ~
-    tildes_line = "~" * len(heading)
-    print(tildes_line)
-    
-    # Display a blank line
-    print()
-
-
-def one_attempt(word: str) -> bool:
-    """
-    Tests the user's ability to type the given word, providing feedback on
-    the attempt. Returns True if they typed it correctly, False otherwise.
-    """
-    attempt: str    #the user's typed word
-    # c orrect = True #Initially True
-    
-    # Prompt user to type the word
-    attempt = input(f"Type '{word}': ")
-    
-    # Check if the attempt is equal to the word
-    if attempt == word:
-        print("Correct!")
-        return True
-    else:
-        print("Try again")
-        return False
-    
-
-def practise_typing(word: str, required: int) -> int:
-    """
-    Tests the user's typing ability by having them type the given word
-    correctly, including capitalisation, required times before finishing.
-    Returns the total number of attempts.
-    """
-    attempts = 0 #the total number of attempts made by the user
-    correct = 0
-    one_attempt(word)
-    
-    
-    while correct < required:
-        attempts += 1
-        if one_attempt(word):
-            correct += 1
-    
-    return attempts
+    # Calculate stopping distance using the formula
+    stopping_distance = (initial_velocity * reaction_time) + ((initial_velocity ** 2) / (2 * FRICTION * GRAVITY))
+    return stopping_distance
 
 def main():
-    WORD = "bee"      # the practice word; treat as constant
-    REPEATS = 4       # number of required correct repeats; treat as constant
-    start_time: float # start time of practise
-    end_time: float   # end time of practice
-    attempted: int    # number of attempts the user actually took
+    
+    print("Stopping Distance \n")
 
-    show_heading("Touch Typing Tutorial")
-    print(f"Today's practice word is '{WORD}' (do not type the quotes)")
-    print(f"You need to type {WORD} {REPEATS} times correctly, as quickly as you can")
-    print()
+    # Stopping Distance 1
+    initial_velocity_1 = 27.8  # Initial velocity for stopping distance 1 in m/s
+    time_1 = 1.5  # Reaction time in seconds
+    
+    # Calculate stopping distance 1 and print the result
+    stopping_distance_1 = distance(initial_velocity_1, time_1)
+    print(f"Stopping Distance 1: {stopping_distance_1:.2f} meters")
 
-    #Run the practice session
-    input("Press Enter to start the timed test")
-    start_time = timeit.default_timer()
-    attempted = practise_typing(WORD, REPEATS)
-    end_time = timeit.default_timer()
+    # Stopping Distance 2
+    initial_velocity_2 = 13.9  # Initial velocity for stopping distance 2 in m/s
+    time_2 = 1.5  # Reaction time in seconds
+    
+    # Calculate stopping distance 2 and print the result
+    stopping_distance_2 = distance(initial_velocity_2, time_2)
+    print(f"Stopping Distance 2: {stopping_distance_2:.2f} meters\n")
+    
+    # User input for initial velocity and time to calculate stopping distance
+    initial_velocity = float(input("Enter initial velocity (m/s): "))
+    reaction_time = float(input("Enter reaction time (s): "))
+    
+    # Calculate stopping distance based on user input and print the result
+    stopping_distance = distance(initial_velocity, reaction_time)
+    print(f'Stopping Distance: {stopping_distance:.2f} meters')
 
-    #Report on the user's performance
-    print("Attempts:", attempted)
-    print(f"Accuracy: {100 * REPEATS / attempted:.0f}%")
-    print(f"Total time: {end_time - start_time:3.1f} s")
-    print()
-    show_heading("New word every day!")
-
-
+    
 if __name__ == "__main__":
     main()
